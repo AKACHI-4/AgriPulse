@@ -1,7 +1,7 @@
 -- Merging decision tree log ---
 application
-INJECTED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:2:5-33:19
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+INJECTED from /home/user/app/android/app/src/main/AndroidManifest.xml:2:5-33:19
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 MERGED from [androidx.window:window:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/37c3797bc6971b2bf79004797565492c/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.window:window:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/37c3797bc6971b2bf79004797565492c/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.core:core:1.13.1] /home/user/.gradle/caches/8.10.2/transforms/853210d5329dfdc58f558a3a9a2e2258/transformed/core-1.13.1/AndroidManifest.xml:28:5-89
@@ -15,17 +15,17 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/user/.gradle/caches/8
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/user/.gradle/caches/8.10.2/transforms/067c0a1a1417f87d57601fb48502ecf1/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/user/.gradle/caches/8.10.2/transforms/067c0a1a1417f87d57601fb48502ecf1/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 	android:extractNativeLibs
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.13.1] /home/user/.gradle/caches/8.10.2/transforms/853210d5329dfdc58f558a3a9a2e2258/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
 	android:name
-		INJECTED from /home/user/myapp/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:1:1-45:12
-MERGED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:1:1-45:12
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:1:1-45:12
+MERGED from /home/user/app/android/app/src/main/AndroidManifest.xml:1:1-45:12
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 MERGED from [androidx.fragment:fragment:1.7.1] /home/user/.gradle/caches/8.10.2/transforms/3f922e48d00c2fcc266c1c5ea09f6ae7/transformed/fragment-1.7.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.window:window:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/37c3797bc6971b2bf79004797565492c/transformed/jetified-window-1.2.0/AndroidManifest.xml:17:1-31:12
 MERGED from [androidx.window:window-java:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/db2f7f287b7346f6a1200544e4b91e7f/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:17:1-21:12
@@ -53,33 +53,33 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /home/user/.gradle/caches
 MERGED from [androidx.window.extensions.core:core:1.0.0] /home/user/.gradle/caches/8.10.2/transforms/2a69b6582470f0cdc490137026640b06/transformed/jetified-core-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /home/user/.gradle/caches/8.10.2/transforms/0022a373cbd9ddb1d83a598321261f08/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:2:1-7:12
 	package
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 	android:versionName
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:1:11-69
 queries
-ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:39:5-44:15
+ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:39:5-44:15
 intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
-ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:40:9-43:18
+ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:40:9-43:18
 action#android.intent.action.PROCESS_TEXT
-ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:41:13-72
+ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:41:13-72
 	android:name
-		ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:41:21-70
+		ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:41:21-70
 data
-ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:42:13-50
+ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:42:13-50
 	android:mimeType
-		ADDED from /home/user/myapp/android/app/src/main/AndroidManifest.xml:42:19-48
+		ADDED from /home/user/app/android/app/src/main/AndroidManifest.xml:42:19-48
 uses-permission#android.permission.INTERNET
-ADDED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml:6:5-66
+ADDED from /home/user/app/android/app/src/debug/AndroidManifest.xml:6:5-66
 	android:name
-		ADDED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml:6:22-64
+		ADDED from /home/user/app/android/app/src/debug/AndroidManifest.xml:6:22-64
 uses-sdk
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
-INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
+INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 MERGED from [androidx.fragment:fragment:1.7.1] /home/user/.gradle/caches/8.10.2/transforms/3f922e48d00c2fcc266c1c5ea09f6ae7/transformed/fragment-1.7.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.7.1] /home/user/.gradle/caches/8.10.2/transforms/3f922e48d00c2fcc266c1c5ea09f6ae7/transformed/fragment-1.7.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.window:window:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/37c3797bc6971b2bf79004797565492c/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
@@ -133,9 +133,9 @@ MERGED from [androidx.window.extensions.core:core:1.0.0] /home/user/.gradle/cach
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /home/user/.gradle/caches/8.10.2/transforms/0022a373cbd9ddb1d83a598321261f08/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /home/user/.gradle/caches/8.10.2/transforms/0022a373cbd9ddb1d83a598321261f08/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
 	android:targetSdkVersion
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /home/user/myapp/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /home/user/app/android/app/src/debug/AndroidManifest.xml
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.2.0] /home/user/.gradle/caches/8.10.2/transforms/37c3797bc6971b2bf79004797565492c/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
 	android:required

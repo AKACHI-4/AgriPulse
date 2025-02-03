@@ -94,6 +94,10 @@ vm_service
 3.3
 file:///home/user/.pub-cache/hosted/pub.dev/vm_service-14.3.1/
 file:///home/user/.pub-cache/hosted/pub.dev/vm_service-14.3.1/lib/
+myapp
+3.7
+file:///home/user/app/
+file:///home/user/app/lib/
 sky_engine
 3.2
 file:///home/user/flutter/bin/cache/pkg/sky_engine/
@@ -106,8 +110,4 @@ flutter_test
 3.3
 file:///home/user/flutter/packages/flutter_test/
 file:///home/user/flutter/packages/flutter_test/lib/
-myapp
-3.7
-file:///home/user/myapp/
-file:///home/user/myapp/lib/
 2

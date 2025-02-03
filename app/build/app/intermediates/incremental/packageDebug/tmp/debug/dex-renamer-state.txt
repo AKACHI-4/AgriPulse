@@ -1,9 +1,9 @@
-#Mon Feb 03 13:17:39 UTC 2025
-base.2=/home/user/myapp/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
+#Mon Feb 03 13:52:59 UTC 2025
+base.2=/home/user/app/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
 path.2=1/classes.dex
-base.1=/home/user/myapp/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.1=/home/user/app/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 path.1=0/classes.dex
-base.0=/home/user/myapp/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.0=/home/user/app/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex

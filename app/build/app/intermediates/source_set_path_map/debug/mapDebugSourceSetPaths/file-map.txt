@@ -18,10 +18,10 @@ com.example.myapp-core-runtime-2.2.0-16 /home/user/.gradle/caches/8.10.2/transfo
 com.example.myapp-jetified-window-java-1.2.0-17 /home/user/.gradle/caches/8.10.2/transforms/db2f7f287b7346f6a1200544e4b91e7f/transformed/jetified-window-java-1.2.0/res
 com.example.myapp-jetified-activity-1.8.1-18 /home/user/.gradle/caches/8.10.2/transforms/e124f6e57d4e95694d3f6ba93a7470e1/transformed/jetified-activity-1.8.1/res
 com.example.myapp-jetified-lifecycle-process-2.7.0-19 /home/user/.gradle/caches/8.10.2/transforms/e9a139a08dd787fdfb1a8f38b0c120d6/transformed/jetified-lifecycle-process-2.7.0/res
-com.example.myapp-debug-20 /home/user/myapp/android/app/src/debug/res
-com.example.myapp-main-21 /home/user/myapp/android/app/src/main/res
-com.example.myapp-pngs-22 /home/user/myapp/build/app/generated/res/pngs/debug
-com.example.myapp-resValues-23 /home/user/myapp/build/app/generated/res/resValues/debug
-com.example.myapp-packageDebugResources-24 /home/user/myapp/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.example.myapp-packageDebugResources-25 /home/user/myapp/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.example.myapp-debug-26 /home/user/myapp/build/app/intermediates/merged_res/debug/mergeDebugResources
+com.example.myapp-debug-20 /home/user/app/android/app/src/debug/res
+com.example.myapp-main-21 /home/user/app/android/app/src/main/res
+com.example.myapp-pngs-22 /home/user/app/build/app/generated/res/pngs/debug
+com.example.myapp-resValues-23 /home/user/app/build/app/generated/res/resValues/debug
+com.example.myapp-packageDebugResources-24 /home/user/app/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.example.myapp-packageDebugResources-25 /home/user/app/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.example.myapp-debug-26 /home/user/app/build/app/intermediates/merged_res/debug/mergeDebugResources
