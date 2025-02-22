@@ -19,6 +19,12 @@ import {
 
 export const description = 'An interactive bar chart';
 
+type ForecastData = {
+  date: string;
+  moisture: number;
+  temperature: number;
+};
+
 const chartData = [
   { date: '2024-04-01', desktop: 222, mobile: 150 },
   { date: '2024-04-02', desktop: 97, mobile: 180 },
@@ -114,32 +120,54 @@ const chartData = [
 ];
 
 const chartConfig = {
-  views: {
-    label: 'Page Views'
-  },
-  desktop: {
-    label: 'Desktop',
+  moisture: {
+    label: 'Soil Moisture',
     color: 'hsl(var(--chart-1))'
   },
-  mobile: {
-    label: 'Mobile',
+  temperature: {
+    label: 'Soil Temperature',
     color: 'hsl(var(--chart-2))'
   }
 } satisfies ChartConfig;
 
 export function BarGraph() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>('desktop');
+  const [chartData, setChartData] = React.useState<ForecastData[]>([]);
+  const [activeChart, setActiveChart] = React.useState<'moisture' | 'temperature'>('moisture');
+  const [isClient, setIsClient] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const total = React.useMemo(
     () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0)
+      moisture: chartData.reduce((acc, curr) => acc + curr.moisture, 0),
+      temperature: chartData.reduce((acc, curr) => acc + curr.temperature, 0)
     }),
-    []
+    [chartData]
   );
 
-  const [isClient, setIsClient] = React.useState(false);
+  React.useEffect(() => {
+    async function fetchForecastData() {
+      setIsLoading(true);
+      try {
+        const response = await fetch('/api/forecast');
+        if (!response.ok) throw new Error('Failed to fetch forecast data');
+
+        const data = await response.json();
+        setChartData(
+          data.map((day: any) => ({
+            date: day.datetime,
+            moisture: day.soilmoisture04 ?? 0, // Handle missing data
+            temperature: day.soiltemp04 ?? 0
+          }))
+        );
+      } catch (error) {
+        console.error('Error fetching forecast:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchForecastData();
+  }, []);
 
   React.useEffect(() => {
     setIsClient(true);
@@ -149,17 +177,24 @@ export function BarGraph() {
     return null;
   }
 
+  if (!isClient || isLoading)
+    return (
+      <Card className='p-6 flex justify-center items-center'>
+        <p className='text-muted-foreground'>Loading data...</p>
+      </Card>
+    );
+
   return (
     <Card>
       <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
         <div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
-          <CardTitle>Bar Chart - Interactive</CardTitle>
+          <CardTitle>Soil Forecast - Interactive</CardTitle>
           <CardDescription>
-            Showing total visitors for the last 3 months
+            Predicted Soil Moisture & Temperature for Next Quarter
           </CardDescription>
         </div>
         <div className='flex'>
-          {['desktop', 'mobile'].map((key) => {
+          {['moisture', 'temperature'].map((key) => {
             const chart = key as keyof typeof chartConfig;
             if (!chart || total[key as keyof typeof total] === 0) return null;
             return (
@@ -169,12 +204,12 @@ export function BarGraph() {
                 className='relative flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6'
                 onClick={() => setActiveChart(chart)}
               >
-                <span className='text-xs text-muted-foreground'>
+                <span className='text-lg'>
                   {chartConfig[chart].label}
                 </span>
-                <span className='text-lg font-bold leading-none sm:text-3xl'>
+                {/* <span className='text-lg font-bold leading-none sm:text-3xl'>
                   {total[key as keyof typeof total]?.toLocaleString()}
-                </span>
+                </span> */}
               </button>
             );
           })}
@@ -212,7 +247,7 @@ export function BarGraph() {
               content={
                 <ChartTooltipContent
                   className='w-[150px]'
-                  nameKey='views'
+                  nameKey={activeChart}
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString('en-US', {
                       month: 'short',
