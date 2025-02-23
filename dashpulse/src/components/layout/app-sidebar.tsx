@@ -50,9 +50,9 @@ import { Icons } from '../icons';
 import { UrlObject } from 'url';
 
 export const company = {
-  name: 'Acme Inc',
+  name: 'AgriPulse',
   logo: GalleryVerticalEnd,
-  plan: 'Enterprise'
+  plan: 'Enterprice'
 };
 
 export default function AppSidebar() {

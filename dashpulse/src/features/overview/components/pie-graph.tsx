@@ -18,50 +18,51 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
+
 const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' }
+  { crop: 'Wheat', area: 320, fill: 'var(--color-wheat)' },
+  { crop: 'Rice', area: 280, fill: 'var(--color-rice)' },
+  { crop: 'Corn', area: 240, fill: 'var(--color-corn)' },
+  { crop: 'Barley', area: 150, fill: 'var(--color-barley)' },
+  { crop: 'Soybean', area: 210, fill: 'var(--color-soybean)' }
 ];
 
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
+  area: {
+    label: 'Cultivated Area'
   },
-  chrome: {
-    label: 'Chrome',
+  wheat: {
+    label: 'Wheat',
     color: 'hsl(var(--chart-1))'
   },
-  safari: {
-    label: 'Safari',
+  rice: {
+    label: 'Rice',
     color: 'hsl(var(--chart-2))'
   },
-  firefox: {
-    label: 'Firefox',
+  corn: {
+    label: 'Corn',
     color: 'hsl(var(--chart-3))'
   },
-  edge: {
-    label: 'Edge',
+  barley: {
+    label: 'Barley',
     color: 'hsl(var(--chart-4))'
   },
-  other: {
-    label: 'Other',
+  soybean: {
+    label: 'Soybean',
     color: 'hsl(var(--chart-5))'
   }
 } satisfies ChartConfig;
 
 export function PieGraph() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+  const totalArea = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.area, 0);
   }, []);
 
   return (
     <Card className='flex flex-col'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Crop Distribution by Field</CardTitle>
+        <CardDescription>Percentage of cultivated land</CardDescription>
       </CardHeader>
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
@@ -75,8 +76,8 @@ export function PieGraph() {
             />
             <Pie
               data={chartData}
-              dataKey='visitors'
-              nameKey='browser'
+              dataKey='area'
+              nameKey='crop'
               innerRadius={60}
               strokeWidth={5}
             >
@@ -93,16 +94,16 @@ export function PieGraph() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className='fill-foreground text-3xl font-bold'
+                          className='fill-foreground text-2xl font-bold'
                         >
-                          {totalVisitors.toLocaleString()}
+                          {totalArea.toLocaleString()} ha
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className='fill-muted-foreground'
                         >
-                          Visitors
+                          Total Area
                         </tspan>
                       </text>
                     );
@@ -118,7 +119,7 @@ export function PieGraph() {
           Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
         </div>
         <div className='leading-none text-muted-foreground'>
-          Showing total visitors for the last 6 months
+          Showing crop distribution for the current season
         </div>
       </CardFooter>
     </Card>
