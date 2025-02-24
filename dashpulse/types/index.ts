@@ -1,4 +1,5 @@
 import { Icons } from '@/components/icons';
+import { ReactNode } from 'react';
 
 export interface NavItem {
   title: string;
@@ -11,6 +12,25 @@ export interface NavItem {
   description?: string;
   isActive?: boolean;
   items?: NavItem[];
+}
+
+export interface Endpoints {
+  title: string;
+  url: string;
+  disabled?: boolean;
+  external?: boolean;
+  shortcut?: [string, string];
+  icon?: keyof typeof Icons;
+  method: string;
+  label?: string;
+  description?: string;
+  isActive?: boolean;
+  items?: NavItem[];
+}
+
+export interface PlantIdDialogProps {
+  endpoint: Endpoints;
+  children?: ReactNode;
 }
 
 export interface NavItemWithChildren extends NavItem {

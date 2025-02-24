@@ -79,6 +79,7 @@
     "recharts": "^2.15.0",
     "sharp": "^0.33.5",
     "sonner": "^1.7.1",
+    "sooner": "^1.1.4",
     "sort-by": "^1.2.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss": "^3.4.16",
