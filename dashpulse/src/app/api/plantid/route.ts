@@ -4,16 +4,15 @@ import axiosConfig from "@/lib/axios.config";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const type = req.nextUrl.searchParams.get("type") || "identification";
+    const endpoint = req.nextUrl.searchParams.get("endpoint");
+    const details = req.nextUrl.searchParams.get("details");
 
-    console.log(body);
-    console.log(type);
-    console.log(req.nextUrl);
+    const { data } = await axiosConfig.post(
+      `/${endpoint}?details=${details}`,
+      body
+    );
 
-    // const { data } = await axiosConfig.post(`/${type}`, body); // ✅ Only pass endpoint
-
-    // return NextResponse.json(data);
-    return {};
+    return NextResponse.json(data);
   } catch (error: any) {
     return NextResponse.json(
       { error: error.response?.data || error.message },
@@ -24,12 +23,14 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const type = req.nextUrl.searchParams.get("type");
-    if (!type) throw new Error("Type parameter is required");
+    const endpoint = req.nextUrl.searchParams.get("endpoint");
+    const query = req.nextUrl.searchParams.get("q");
 
-    const query = req.nextUrl.searchParams.toString();
+    console.log(endpoint, query);
 
-    const { data } = await axiosConfig.get(`/${type}?${query}`); // ✅ Only pass endpoint
+    const { data } = await axiosConfig.get(
+      `/${endpoint}?q=${query}`
+    );
 
     return NextResponse.json(data);
   } catch (error: any) {

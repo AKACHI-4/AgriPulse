@@ -28,13 +28,15 @@ export default function PlantIdentificationDialog({ endpoint }: PlantIdDialogPro
     try {
       const base64String = await convertToBase64(image);
 
-      const response = await fetch('/api/plantid', {
+      const response = await fetch(`/api/plantid?endpoint=${endpoint.url}/&details=common_names,url,description,taxonomy,rank,gbif_id,inaturalist_id,image,synonyms,edible_parts,watering,propagation_methods`, {
         method: endpoint.method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ images: [base64String], similar_images: true }),
       });
 
       const data = await response.json();
+      console.log(data);
+
       setResult(data);
     } catch (error) {
       console.error('Error identifying plant:', error);
