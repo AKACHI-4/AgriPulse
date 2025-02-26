@@ -13,7 +13,7 @@ export const createUser = mutation({
 
     return await ctx.db.insert("users", {
       clerk_id: identity.subject,
-      name: String(identity.firstName ?? ""),
+      name: identity.givenName ?? "",
       email: identity.email ?? "",
       phone: identity.phoneNumber ?? "",
       ...args,

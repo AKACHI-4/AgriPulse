@@ -9,10 +9,6 @@ export default function ClientSetupHandler({ children }: { children: React.React
   const user = useQuery(api.users.getCurrentUser);
   const [setupDone, setSetupDone] = useState(!!user);
 
-  useEffect(() => {
-    if (user) setSetupDone(true);
-  }, [user]);
-
   if (!setupDone) {
     return <UserSetupDialog onSetupComplete={() => setSetupDone(true)} />;
   }

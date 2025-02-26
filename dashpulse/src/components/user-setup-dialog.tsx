@@ -9,7 +9,10 @@ export default function UserSetupDialog({ onSetupComplete }: { onSetupComplete: 
   const [step, setStep] = React.useState<"location" | "crops">("location");
   const [open, setOpen] = React.useState(true);
 
+  console.log("Current step:", step);
+
   const handleLocationSubmit = () => {
+    console.log("Going for crops");
     setStep("crops");
   };
 
@@ -19,12 +22,9 @@ export default function UserSetupDialog({ onSetupComplete }: { onSetupComplete: 
   };
 
   return (
-    <Dialog open={open}>
-      {step === "location" ? (
-        <LocationForm onNext={handleLocationSubmit} />
-      ) : (
-        <CropForm onFinish={handleCropSubmit} />
-      )}
+    <Dialog open={open} onOpenChange={setOpen}>
+      {step === "location" && <LocationForm onNext={handleLocationSubmit} />}
+      {step === "crops" && <CropForm onFinish={handleCropSubmit} />}
     </Dialog>
   );
 }
