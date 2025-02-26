@@ -44,7 +44,7 @@ export default function LocationForm({ onNext }: { onNext: (location: any) => vo
   };
 
   return (
-    <DialogContent classname="absolute min-h-fit">
+    <DialogContent className="relative max-w-md p-4">
       <DialogHeader>
         <DialogTitle>Set Your Location</DialogTitle>
       </DialogHeader>
