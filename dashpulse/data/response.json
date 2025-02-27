@@ -1,0 +1,30 @@
+{
+  "entities": [
+    {
+      "matched_in": "Aloe vera",
+      "matched_in_type": "entity_name",
+      "access_token": "cEQyUAhpW2tYbQNlY1JqWkB1WWl6TkB4ZFVEcwAzSHk-",
+      "match_position": 0,
+      "match_length": 9,
+      "entity_name": "Aloe vera"
+    },
+    {
+      "matched_in": "Aloe vera",
+      "matched_in_type": "synonym",
+      "access_token": "JkRpUF1pCWtZbQFlalJsWhd1C2l6Tk54ZVUVcwEzQXk-",
+      "match_position": 0,
+      "match_length": 9,
+      "entity_name": "Aloe succotrina"
+    },
+    {
+      "matched_in": "Aloe vera var. officinalis",
+      "matched_in_type": "synonym",
+      "access_token": "J0Q2UAppUmtVbVJlalI8WhF1W2kqTh14ZFVDcwUzTnk-",
+      "match_position": 0,
+      "match_length": 9,
+      "entity_name": "Aloe officinalis"
+    }
+  ],
+  "entities_trimmed": false,
+  "limit": 10
+}

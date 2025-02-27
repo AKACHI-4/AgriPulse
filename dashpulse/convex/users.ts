@@ -5,30 +5,36 @@ export const createUser = mutation({
   args: {
     address: v.string(),
     latitude: v.number(),
-    longitude: v.number()
+    longitude: v.number(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) throw new Error("Not authenticated");
 
-    return await ctx.db.insert("users", {
+    const existingUser = await ctx.db
+      .query("users")
+      .withIndex("by_clerk_id", (q) => q.eq("clerk_id", identity.subject))
+      .unique();
+    if (existingUser) return existingUser._id;
+
+    const newUser = {
       clerk_id: identity.subject,
       name: identity.givenName ?? "",
       email: identity.email ?? "",
       phone: identity.phoneNumber ?? "",
       ...args,
       created_at: Date.now(),
-      updated_at: Date.now()
-    });
-  }
+      updated_at: Date.now(),
+    };
+    return await ctx.db.insert("users", newUser);
+  },
 });
 
 export const getCurrentUser = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-    console.log(identity);
-
     if (!identity) throw new Error("Not authenticated");
+    console.log(identity);
 
     return await ctx.db
       .query("users")

@@ -7,10 +7,14 @@ export async function POST(req: NextRequest) {
     const endpoint = req.nextUrl.searchParams.get("endpoint");
     const details = req.nextUrl.searchParams.get("details");
 
+    // console.log(body, endpoint, details)
+
     const { data } = await axiosConfig.post(
       `/${endpoint}?details=${details}`,
       body
     );
+
+    // console.log("data : ", data);
 
     return NextResponse.json(data);
   } catch (error: any) {
@@ -26,7 +30,7 @@ export async function GET(req: NextRequest) {
     const endpoint = req.nextUrl.searchParams.get("endpoint");
     const query = req.nextUrl.searchParams.get("q");
 
-    console.log(endpoint, query);
+    // console.log(endpoint, query);
 
     const { data } = await axiosConfig.get(
       `/${endpoint}?q=${query}`

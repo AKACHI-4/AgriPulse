@@ -7,15 +7,23 @@ import { DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/compon
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlantIdDialogProps } from "$/types";
 import { Input } from "@/components/ui/input";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "$/convex/_generated/api";
 
 export default function PlantSearch({ endpoint }: PlantIdDialogProps) {
   const [query, setQuery] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const user = useQuery(api.users.getCurrentUser);
+  const userId = user?._id;
+
+  const saveSearch = useMutation(api.searches.createSearch);
+
   const handleSearch = async () => {
-    if (!query.trim()) return;
+    if (!query.trim() || !userId) return;
 
     setLoading(true);
     setError(null);
@@ -29,9 +37,32 @@ export default function PlantSearch({ endpoint }: PlantIdDialogProps) {
       if (!response.ok) throw new Error("Failed to fetch plant search results.");
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
-      setResults(data || []);
+      setResults(data);
+
+      const searchData = {
+        user_id: userId,
+        entities: data.entities.map((entity:
+          {
+            matched_in: string;
+            matched_in_type: string;
+            entity_name: string;
+            access_token: string;
+            match_position: string;
+            match_length: number;
+          }
+        ) => ({
+          matched_in: entity.matched_in,
+          matched_in_type: entity.matched_in_type,
+          entity_name: entity.entity_name,
+          access_token: entity.access_token,
+          match_position: entity.match_position,
+          match_length: entity.match_length
+        })),
+      };
+
+      await saveSearch(searchData);
     } catch (err) {
       setError("Error fetching search results.");
     } finally {
