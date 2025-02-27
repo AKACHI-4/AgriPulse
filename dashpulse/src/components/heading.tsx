@@ -13,12 +13,11 @@ export const Heading = () => {
   return (
     <div className='max-w-3xl space-y-4'>
       <h1 className='text-3xl font-bold sm:text-5xl md:text-6xl'>
-        {/* Your Ideas, Documents, & Plans. Unified. Welcome to{" "} */}
-        <span className='underline'>AgriPulse</span>
+        Your Farm, Data, & Growth. Optimized. Welcome to{" "}
+        <span className='underline'>100x Farmer</span>
       </h1>
       <h3 className='text-base font-medium sm:text-xl md:text-2xl'>
-        {/* Potion is the Connected workspace where <br /> better, faster work
-        happens. */}
+        100x Farmer is the smart platform where <br /> crops thrive and farmers grow.
       </h3>
       {isLoading && (
         <div className='flex w-full items-center justify-center'>
@@ -26,7 +25,7 @@ export const Heading = () => {
         </div>
       )}
       {isAuthenticated && !isLoading && (
-        <Button asChild>
+        <Button className="text-base px-5 py-4" asChild>
           <Link href='/dashboard/overview'>
             Enter Dashboard
             <ArrowRight className='ml-2 h-4 w-4' />
@@ -35,7 +34,7 @@ export const Heading = () => {
       )}
       {!isAuthenticated && !isLoading && (
         <SignInButton mode='modal'>
-          <Button>
+          <Button className="text-base px-5 py-4">
             Get Dashboard free
             <ArrowRight className='ml-2 h-4 w-4' />
           </Button>

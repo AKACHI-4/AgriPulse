@@ -10,7 +10,6 @@ import { convertToBase64 } from "@/lib/utils";
 import { PlantIdDialogProps } from "$/types";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
-import data from "$/data/response.json"
 
 export default function PlantIdentificationDialog({ endpoint }: PlantIdDialogProps) {
   const [image, setImage] = useState<File | null>(null);

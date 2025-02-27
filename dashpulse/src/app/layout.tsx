@@ -17,23 +17,24 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'AgriPulse',
-  description: 'we believe that farmers deservers something more smart.'
-  // icons: {
-  //   icon: [
-  //     {
-  //       media: "(prefers-color-scheme: light)",
-  //       url: "/logo-dark.svg",
-  //       href: "/logo-dark.svg",
-  //     },
-  //     {
-  //       media: "(prefers-dark-scheme: dark)",
-  //       url: "/logo.svg",
-  //       href: "/logo.svg",
-  //     },
-  //   ],
-  // },
+  title: '100x Farmer',
+  description: '100x Farmer is a smart farming platform designed to help farmers maximize productivity, optimize resources, and make data-driven decisions with ease. We believe that farmers deserve smarter, technology-driven solutions to enhance efficiency, sustainability, and profitability in modern agriculture.',
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/logo-dark.svg",
+        href: "/logo-dark.svg",
+      },
+      {
+        media: "(prefers-dark-scheme: dark)",
+        url: "/logo.svg",
+        href: "/logo.svg",
+      },
+    ],
+  },
 };
+
 
 export default function RootLayout({
   children
@@ -42,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en' className={`${lato.className}`} suppressHydrationWarning>
-      <body className={'overflow-hidden'}>
+      <body>
         <NextTopLoader showSpinner={false} />
         <NuqsAdapter>
           <ConvexClientProvider>
@@ -51,7 +52,7 @@ export default function RootLayout({
               defaultTheme='system'
               enableSystem
               disableTransitionOnChange
-              storageKey='potion-theme-2'
+              storageKey='100xfarmer-theme'
             >
               <Toaster position='bottom-center' />
               <ModalProvider />

@@ -24,7 +24,7 @@ export const Navbar = () => {
       )}
     >
       <Logo />
-      <div className='flex w-full items-center justify-between gap-x-2 md:ml-auto md:justify-end'>
+      <div className='flex w-full items-center justify-between gap-x-3 md:ml-auto md:justify-end'>
         {isLoading && (
           <p>
             <Spinner />
@@ -44,12 +44,13 @@ export const Navbar = () => {
         )}
         {isAuthenticated && !isLoading && (
           <>
-            <Button variant='ghost' size='sm' asChild>
+            {/* <Button variant='ghost' size='sm' asChild>
               <Link href='/dashboard'>Enter Potion</Link>
-            </Button>
+            </Button> */}
             <UserButton afterSignOutUrl='/' />
           </>
         )}
+
         <ModeToggle />
       </div>
     </div>

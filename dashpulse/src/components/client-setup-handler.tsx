@@ -14,9 +14,9 @@ export default function ClientSetupHandler({ children }: { children: React.React
   const [setupStep, setSetupStep] = useState<"loading" | "location" | "crops" | "done">("loading");
 
   useEffect(() => {
-    console.log("DEBUG: User Query Result:", user);
-    console.log("DEBUG: Crops Query Result:", crops);
-    console.log("DEBUG: Current Setup Step:", setupStep);
+    // console.log("DEBUG: User Query Result:", user);
+    // console.log("DEBUG: Crops Query Result:", crops);
+    // console.log("DEBUG: Current Setup Step:", setupStep);
 
     if (user === undefined || crops === undefined) return;
 
@@ -25,7 +25,7 @@ export default function ClientSetupHandler({ children }: { children: React.React
     else setSetupStep("done");
   }, [user, crops]);
 
-  console.log("Final Step Before Render:", setupStep);
+  // console.log("Final Step Before Render:", setupStep);
 
   if (setupStep === "loading") {
     return (
