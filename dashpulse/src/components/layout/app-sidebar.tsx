@@ -50,7 +50,7 @@ import { Icons } from '../icons';
 import { UrlObject } from 'url';
 
 export const company = {
-  name: 'AgriPulse',
+  name: '100xFarmer',
   logo: GalleryVerticalEnd,
   plan: 'Enterprice'
 };

@@ -1,5 +1,9 @@
+"use client";
+
+import { api } from '$/convex/_generated/api';
 import PageContainer from '@/components/layout/page-container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from 'convex/react';
 import React from 'react';
 
 export default function OverViewLayout({
@@ -13,14 +17,16 @@ export default function OverViewLayout({
   bar_stats: React.ReactNode;
   area_stats: React.ReactNode;
 }) {
+  const user = useQuery(api.users.getCurrentUser) ?? null;
+
   return (
     <PageContainer>
       <div className='flex flex-1 flex-col space-y-2'>
-        {/* <div className='flex items-center justify-between space-y-2'>
+        <div className='flex items-center justify-between space-y-2'>
           <h2 className='text-2xl font-bold tracking-tight'>
-            Hi, Welcome back 👋
+            Welcome back, {user?.name}! 🌱 Let’s check your crops.
           </h2>
-        </div> */}
+        </div>
         <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

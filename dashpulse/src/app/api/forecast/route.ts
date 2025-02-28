@@ -24,7 +24,7 @@ export async function GET() {
     const url = `${baseUrl}/${encodeURIComponent(city)}/${startDate}/${endDate}?${queryParams}`;
     const { data } = await axios.get(url);
 
-    console.log(data.days);
+    // console.log(data.days);
     return NextResponse.json(data.days, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Failed to fetch data' }, { status: 500 });
