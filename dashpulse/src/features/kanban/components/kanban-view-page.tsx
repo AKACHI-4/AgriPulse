@@ -7,7 +7,10 @@ export default function KanbanViewPage() {
     <PageContainer>
       <div className='space-y-4'>
         <div className='flex items-start justify-between'>
-          <Heading title={`Prediction`} description='lorem ipsum' />
+          <Heading
+            title={`Canopy 🌳`}
+            description='AI-driven insights to predict and protect your crops 👨‍🌾'
+          />
           {/* <NewTaskDialog /> */}
         </div>
         <PlantIdEndpointsBoard />

@@ -13,7 +13,7 @@ export const Heading = () => {
   return (
     <div className='max-w-3xl space-y-4'>
       <h1 className='text-3xl font-bold sm:text-5xl md:text-6xl'>
-        Your Farm, Data, & Growth. Optimized. Welcome to{" "}
+        Your Farm, Data, & Growth, Optimized. Welcome to{" "}
         <span className='underline'>100xFarmer</span>
       </h1>
       <h3 className='text-base font-medium sm:text-xl md:text-2xl'>

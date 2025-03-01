@@ -34,7 +34,7 @@ export const getCurrentUser = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) throw new Error("Not authenticated");
-    console.log(identity);
+    // console.log(identity);
 
     return await ctx.db
       .query("users")
@@ -43,23 +43,23 @@ export const getCurrentUser = query({
   }
 });
 
-export const updateUser = mutation({
-  args: {
-    id: v.id("users"),
-    name: v.optional(v.string()),
-    phone: v.optional(v.string()),
-    address: v.optional(v.string()),
-    latitude: v.optional(v.number()),
-    longitude: v.optional(v.number())
-  },
-  handler: async (ctx, args) => {
-    return await ctx.db.patch(args.id, { ...args, updated_at: Date.now() });
-  }
-});
+// export const updateUser = mutation({
+//   args: {
+//     id: v.id("users"),
+//     name: v.optional(v.string()),
+//     phone: v.optional(v.string()),
+//     address: v.optional(v.string()),
+//     latitude: v.optional(v.number()),
+//     longitude: v.optional(v.number())
+//   },
+//   handler: async (ctx, args) => {
+//     return await ctx.db.patch(args.id, { ...args, updated_at: Date.now() });
+//   }
+// });
 
-export const deleteUser = mutation({
-  args: { id: v.id("users") },
-  handler: async (ctx, args) => {
-    return await ctx.db.delete(args.id);
-  }
-});
+// export const deleteUser = mutation({
+//   args: { id: v.id("users") },
+//   handler: async (ctx, args) => {
+//     return await ctx.db.delete(args.id);
+//   }
+// });

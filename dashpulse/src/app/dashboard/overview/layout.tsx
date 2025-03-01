@@ -1,10 +1,18 @@
 "use client";
 
 import { api } from '$/convex/_generated/api';
+import { Id } from '$/convex/_generated/dataModel';
 import PageContainer from '@/components/layout/page-container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useQuery } from 'convex/react';
+import { useQuery } from "convex/react";
 import React from 'react';
+
+type WeatherDataInterface = {
+  temp: number;
+  main: string;
+  description: string;
+  location: string;
+};
 
 export default function OverViewLayout({
   sales,
@@ -17,41 +25,58 @@ export default function OverViewLayout({
   bar_stats: React.ReactNode;
   area_stats: React.ReactNode;
 }) {
-  const user = useQuery(api.users.getCurrentUser) ?? null;
+  const user = useQuery(api.users.getCurrentUser);
+  // console.log("user : ", user);
+
+  const cropData = useQuery(api.crops.getCropYieldAndFieldRevenue, {
+    user_id: user?._id as Id<"users">,
+  });
+  const cropYield = cropData?.cropYield ?? 0;
+  const fieldRevenue = cropData?.fieldRevenue ?? 0;
+
+  const [weatherData, setWeatherData] = React.useState<WeatherDataInterface>();
+
+  React.useEffect(() => {
+    if (!user || !user.latitude || !user.longitude) return;
+
+    async function fetchWeatherData() {
+      try {
+        const response = await fetch(
+          `/api/weather?q=${user?.address}&lat=${user?.latitude}&lon=${user?.longitude}`
+        );
+        if (!response.ok) throw new Error('Failed to fetch weather data');
+
+        const data = await response.json();
+        setWeatherData(data);
+      } catch (error) {
+        console.error('Error fetching forecast:', error);
+      }
+    }
+
+    fetchWeatherData();
+  }, []);
 
   return (
     <PageContainer>
-      <div className='flex flex-1 flex-col space-y-2'>
+      <div className='flex flex-1 flex-col space-y-4'>
         <div className='flex items-center justify-between space-y-2'>
           <h2 className='text-2xl font-bold tracking-tight'>
             Welcome back, {user?.name}! 🌱 Let’s check your crops.
           </h2>
         </div>
-        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+        <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
                 Total Crop Yield
               </CardTitle>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                className='h-4 w-4 text-muted-foreground'
-              >
-                <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
-              </svg>
             </CardHeader>
             <CardContent>
               <div className='space-x-1'>
                 <span className='text-2xl font-bold'>
-                  5500
+                  {cropYield}
                 </span>
-                <span className='text-gray-300 font-semibold text-md'>kg/ha</span>
+                <span className='text-gray-800 font-semibold text-md'>kg/ha</span>
               </div>
               <p className='text-xs text-muted-foreground'>
                 +5% from last season
@@ -63,20 +88,6 @@ export default function OverViewLayout({
               <CardTitle className='text-sm font-medium'>
                 Active IoT Sensors
               </CardTitle>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                className='h-4 w-4 text-muted-foreground'
-              >
-                <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-                <circle cx='9' cy='7' r='4' />
-                <path d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' />
-              </svg>
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>+1</div>
@@ -88,47 +99,22 @@ export default function OverViewLayout({
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>Field Revenue</CardTitle>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                className='h-4 w-4 text-muted-foreground'
-              >
-                <rect width='20' height='14' x='2' y='5' rx='2' />
-                <path d='M2 10h20' />
-              </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>₹12,234</div>
+              <div className='text-2xl font-bold'>₹ {fieldRevenue}</div>
               <p className='text-xs text-muted-foreground'>
-                +5.2% from last month
+                +5.2% since last update
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>Temperature</CardTitle>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                className='h-4 w-4 text-muted-foreground'
-              >
-                <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-              </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>24°C</div>
+              <div className='text-2xl font-bold'>{weatherData?.temp}°C</div>
               <p className='text-xs text-muted-foreground'>
-                +3°C since last month
+                +3°C compared to last month
               </p>
             </CardContent>
           </Card>
@@ -137,7 +123,6 @@ export default function OverViewLayout({
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
           <div className='col-span-4'>{bar_stats}</div>
           <div className='col-span-4 md:col-span-3'>
-            {/* sales arallel routes */}
             {sales}
           </div>
           <div className='col-span-4'>{area_stats}</div>

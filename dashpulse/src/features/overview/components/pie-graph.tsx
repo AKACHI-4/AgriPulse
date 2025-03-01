@@ -1,14 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { TrendingUp } from 'lucide-react';
-import { Label, Pie, PieChart } from 'recharts';
+import { Label, Pie, PieChart, Cell } from 'recharts';
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
@@ -18,45 +16,38 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-
-const chartData = [
-  { crop: 'Wheat', area: 320, fill: 'var(--color-wheat)' },
-  { crop: 'Rice', area: 280, fill: 'var(--color-rice)' },
-  { crop: 'Corn', area: 240, fill: 'var(--color-corn)' },
-  { crop: 'Barley', area: 150, fill: 'var(--color-barley)' },
-  { crop: 'Soybean', area: 210, fill: 'var(--color-soybean)' }
-];
+import { useQuery } from 'convex/react';
+import { api } from '$/convex/_generated/api';
+import { Id } from '$/convex/_generated/dataModel';
 
 const chartConfig = {
-  area: {
-    label: 'Cultivated Area'
-  },
-  wheat: {
-    label: 'Wheat',
-    color: 'hsl(var(--chart-1))'
-  },
-  rice: {
-    label: 'Rice',
-    color: 'hsl(var(--chart-2))'
-  },
-  corn: {
-    label: 'Corn',
-    color: 'hsl(var(--chart-3))'
-  },
-  barley: {
-    label: 'Barley',
-    color: 'hsl(var(--chart-4))'
-  },
-  soybean: {
-    label: 'Soybean',
-    color: 'hsl(var(--chart-5))'
-  }
-} satisfies ChartConfig;
+  area: { label: 'Cultivated Area' }
+};
 
 export function PieGraph() {
+  const colorPalette = [
+    'hsl(var(--chart-1))',
+    'hsl(var(--chart-2))',
+    'hsl(var(--chart-3))',
+    'hsl(var(--chart-4))',
+    'hsl(var(--chart-5))',
+    'hsl(var(--chart-6))'
+  ];
+
+  const user = useQuery(api.users.getCurrentUser);
+  const crops = useQuery(api.crops.getCropsByUser, {
+    user_id: user?._id as Id<"users">
+  });
+
+  const chartData = crops?.map((crop, index) => ({
+    crop: crop.name,
+    area: crop.area,
+    color: colorPalette[index % colorPalette.length]
+  })) ?? [];
+
   const totalArea = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.area, 0);
-  }, []);
+  }, [chartData]);
 
   return (
     <Card className='flex flex-col'>
@@ -67,20 +58,14 @@ export function PieGraph() {
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
           config={chartConfig}
-          className='mx-auto aspect-square max-h-[360px]'
+          className='mx-auto aspect-square max-h-[357px]'
         >
           <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey='area'
-              nameKey='crop'
-              innerRadius={60}
-              strokeWidth={5}
-            >
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <Pie data={chartData} dataKey='area' nameKey='crop' innerRadius={60} strokeWidth={5}>
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} className='opacity-75' />
+              ))}
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -91,18 +76,10 @@ export function PieGraph() {
                         textAnchor='middle'
                         dominantBaseline='middle'
                       >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className='fill-foreground text-2xl font-bold'
-                        >
+                        <tspan x={viewBox.cx} y={viewBox.cy} className='fill-foreground text-2xl font-bold'>
                           {totalArea.toLocaleString()} ha
                         </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className='fill-muted-foreground'
-                        >
+                        <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className='fill-muted-foreground'>
                           Total Area
                         </tspan>
                       </text>
@@ -114,14 +91,6 @@ export function PieGraph() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className='flex-col gap-2 text-sm'>
-        <div className='flex items-center gap-2 font-medium leading-none'>
-          Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
-        </div>
-        <div className='leading-none text-muted-foreground'>
-          Showing crop distribution for the current season
-        </div>
-      </CardFooter>
     </Card>
   );
 }

@@ -20,6 +20,7 @@ export interface Endpoints {
   disabled?: boolean;
   external?: boolean;
   shortcut?: [string, string];
+  source?: string;
   icon?: keyof typeof Icons;
   method: string;
   label?: string;

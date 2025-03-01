@@ -14,7 +14,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
 
   const createCrop = useMutation(api.crops.createCrop);
 
-  const [crops, setCrops] = useState([{ name: "", area: 0, revenue: 0 }]);
+  const [crops, setCrops] = useState([{ name: "", area: 0, revenue: 0, production: 0 }]);
 
   const handleCropChange = (index: number, field: string, value: string) => {
     const newCrops = [...crops];
@@ -24,7 +24,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
 
   const addCrop = () => {
     if (crops.length < 10) {
-      setCrops([...crops, { name: "", area: 0, revenue: 0 }]);
+      setCrops([...crops, { name: "", area: 0, revenue: 0, production: 0 }]);
     }
   };
   const removeCrop = (index: number) => setCrops(crops.filter((_, i) => i !== index));
@@ -40,7 +40,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
 
   return (
     <Dialog open={open}>
-      <DialogContent className="max-w-lg p-6 rounded-lg shadow-lg">
+      <DialogContent className="max-w-2xl p-6 rounded-lg shadow-lg">
         <DialogHeader className="flex flex-col items-center">
           <DialogTitle className="text-xl font-semibold">Add Your Crops</DialogTitle>
         </DialogHeader>
@@ -66,6 +66,13 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                 type="number"
                 value={crop.revenue || ""}
                 onChange={(e) => handleCropChange(index, "revenue", e.target.value)}
+                className="p-3 border border-gray-300 rounded-md"
+              />
+              <Input
+                placeholder="Production (kg)"
+                type="number"
+                value={crop.production || ""}
+                onChange={(e) => handleCropChange(index, "production", e.target.value)}
                 className="p-3 border border-gray-300 rounded-md"
               />
 

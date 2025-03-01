@@ -7,25 +7,19 @@ import {
   CardDescription
 } from '@/components/ui/card';
 
-// Mock news data (Replace with API integration)
-const newsArticles = [
+// Mock sensor alerts (Replace with real API data)
+const sensorAlerts = [
   {
     id: 1,
-    title: 'New Climate-Resistant Crops Introduced',
-    source: 'AgriDaily',
-    timeAgo: '2 hours ago',
+    message: 'Soil moisture level is low',
+    sensor: 'Field Sensor 01',
+    timeAgo: '10 mins ago',
   },
   {
     id: 2,
-    title: 'Government Announces Subsidy for Organic Farming',
-    source: 'Farmers Weekly',
-    timeAgo: '5 hours ago',
-  },
-  {
-    id: 3,
-    title: 'AI-Powered Drones Now Helping Farmers',
-    source: 'TechAgri News',
-    timeAgo: '1 day ago',
+    message: 'Temperature increased by 3°C',
+    sensor: 'Field Sensor 01',
+    timeAgo: '2 hours ago',
   },
 ];
 
@@ -33,22 +27,22 @@ export function RecentSales() {
   return (
     <Card className="min-h-[435px]">
       <CardHeader>
-        <CardTitle>Latest Agri-News</CardTitle>
-        <CardDescription>Stay updated with recent agricultural trends.</CardDescription>
+        <CardTitle>Sensor Alerts</CardTitle>
+        <CardDescription>Live updates from your IoT sensors.</CardDescription>
       </CardHeader>
 
       <CardContent>
         <div className="space-y-6">
-          {newsArticles.map((article) => (
-            <div key={article.id} className="flex items-center">
-              <Avatar className="h-9 w-9">
-                <AvatarFallback>{article.source.charAt(0)}</AvatarFallback>
+          {sensorAlerts.map((alert) => (
+            <div key={alert.id} className="flex items-center">
+              <Avatar className="h-9 w-9 text-white">
+                <AvatarFallback className='bg-red-600'>⚠</AvatarFallback>
               </Avatar>
               <div className="ml-4 space-y-1">
-                <p className="text-sm font-medium">{article.title}</p>
-                <p className="text-sm text-muted-foreground">{article.source}</p>
+                <p className="text-sm font-medium">{alert.message}</p>
+                <p className="text-sm text-muted-foreground">{alert.sensor}</p>
               </div>
-              <div className="ml-auto text-xs text-muted-foreground">{article.timeAgo}</div>
+              <div className="ml-auto text-xs text-muted-foreground">{alert.timeAgo}</div>
             </div>
           ))}
         </div>

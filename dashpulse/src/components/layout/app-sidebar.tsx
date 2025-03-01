@@ -39,7 +39,7 @@ import {
   ChevronRight,
   ChevronsUpDown,
   CreditCard,
-  GalleryVerticalEnd,
+  Sprout,
   LogOut
 } from 'lucide-react';
 import { useUser, SignOutButton } from '@clerk/clerk-react';
@@ -51,8 +51,8 @@ import { UrlObject } from 'url';
 
 export const company = {
   name: '100xFarmer',
-  logo: GalleryVerticalEnd,
-  plan: 'Enterprice'
+  logo: Sprout,
+  plan: 'Enterprise'
 };
 
 export default function AppSidebar() {
@@ -65,7 +65,7 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className='flex gap-2 py-2 text-sidebar-accent-foreground'>
           <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-            <company.logo className='size-4' />
+            <company.logo className='size-6' />
           </div>
           <div className='grid flex-1 text-left text-sm leading-tight'>
             <span className='truncate font-semibold'>{company.name}</span>

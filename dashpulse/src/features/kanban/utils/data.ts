@@ -8,6 +8,7 @@ export const plantIdEndpoints: Endpoints[] = [
     description: 'Submit images to identify plant species and receive possible matches with detailed information.',
     // icon: 'dashboard',
     isActive: true,
+    source: 'plant.id',
   },
   {
     title: 'Health assessment',
@@ -16,6 +17,7 @@ export const plantIdEndpoints: Endpoints[] = [
     description: 'Upload images to assess plant health, detect diseases, pests, or other issues affecting the plant.',
     // icon: 'health',
     isActive: true,
+    source: 'plant.id',
   },
   {
     title: 'Plants search',
@@ -24,6 +26,7 @@ export const plantIdEndpoints: Endpoints[] = [
     description: 'Search for plants in the database using various query parameters like name, family, or genus.',
     // icon: 'search',
     isActive: true,
+    source: 'plant.id',
   },
   // {
   //   title: 'Plant detail',

@@ -17,8 +17,8 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: '100x Farmer',
-  description: '100x Farmer is a smart farming platform designed to help farmers maximize productivity, optimize resources, and make data-driven decisions with ease. We believe that farmers deserve smarter, technology-driven solutions to enhance efficiency, sustainability, and profitability in modern agriculture.',
+  title: '100xFarmer',
+  description: '100xFarmer is a smart farming platform designed to help farmers maximize productivity, optimize resources, and make data-driven decisions with ease. We believe that farmers deserve smarter, technology-driven solutions to enhance efficiency, sustainability, and profitability in modern agriculture.',
   icons: {
     icon: [
       {

@@ -21,6 +21,7 @@ export default defineSchema({
     name: v.string(),
     area: v.number(),
     revenue: v.number(),
+    production: v.number(),
     created_at: v.number(),
     updated_at: v.number()
   })
