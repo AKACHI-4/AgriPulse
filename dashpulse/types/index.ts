@@ -29,7 +29,7 @@ export interface Endpoints {
   items?: NavItem[];
 }
 
-export interface PlantIdDialogProps {
+export interface ModelEndpointsInterface {
   endpoint: Endpoints;
   children?: ReactNode;
 }

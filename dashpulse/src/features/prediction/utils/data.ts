@@ -1,6 +1,6 @@
 import { Endpoints } from "$/types";
 
-export const plantIdEndpoints: Endpoints[] = [
+export const modelEndpoints: Endpoints[] = [
   {
     title: 'Create identification',
     url: 'identification',
@@ -20,14 +20,22 @@ export const plantIdEndpoints: Endpoints[] = [
     source: 'plant.id',
   },
   {
-    title: 'Plants search',
-    url: 'kb/plants/name_search',
-    method: 'GET',
-    description: 'Search for plants in the database using various query parameters like name, family, or genus.',
-    // icon: 'search',
+    title: 'Disease Detection',
+    url: '/predict/disease',
+    method: 'POST',
+    description: 'Submit images to assess canopy cover and determine solar potential for plant growth.',
     isActive: true,
-    source: 'plant.id',
-  },
+    source: 'Development Team',
+  }
+  // {
+  //   title: 'Plants search',
+  //   url: 'kb/plants/name_search',
+  //   method: 'GET',
+  //   description: 'Search for plants in the database using various query parameters like name, family, or genus.',
+  //   // icon: 'search',
+  //   isActive: true,
+  //   source: 'plant.id',
+  // },
   // {
   //   title: 'Plant detail',
   //   url: 'plant-detail',

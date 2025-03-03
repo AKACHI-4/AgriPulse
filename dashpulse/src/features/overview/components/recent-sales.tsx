@@ -15,12 +15,6 @@ const sensorAlerts = [
     sensor: 'Field Sensor 01',
     timeAgo: '10 mins ago',
   },
-  {
-    id: 2,
-    message: 'Temperature increased by 3°C',
-    sensor: 'Field Sensor 01',
-    timeAgo: '2 hours ago',
-  },
 ];
 
 export function RecentSales() {

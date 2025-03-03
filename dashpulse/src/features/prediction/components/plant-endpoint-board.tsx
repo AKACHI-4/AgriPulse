@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { plantIdEndpoints } from '../utils/data';
+import { modelEndpoints } from '../utils/data';
 import PlantIdDialog from './plant-id-dialog';
 import { cn } from '@/lib/utils';
 
@@ -17,9 +17,9 @@ export default function PlantIdEndpointsBoard() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {plantIdEndpoints.map((endpoint, index) => (
+      {modelEndpoints.map((endpoint, index) => (
         <PlantIdDialog key={index} endpoint={endpoint}>
-          <Card className="p-4 hover:shadow-xl transition-all duration-300 border border-gray-200 rounded-xl cursor-pointer">
+          <Card className="px-4 py-2 hover:shadow-xl transition-all duration-300 border border-gray-200 rounded-xl cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between pb-3">
               <CardTitle className="text-lg font-semibold">
                 {endpoint.title}
@@ -29,12 +29,15 @@ export default function PlantIdEndpointsBoard() {
               </span>
             </CardHeader>
             <CardContent>
-              <p className="text-md text-gray-600">{endpoint.description}</p>
-              <p className="text-sm text-gray-500 mt-2">
-                🔗 Source: <a href={endpoint.source} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                  {endpoint.source}
-                </a>
-              </p>
+              <div className="text-md text-gray-600 space-y-4">
+                <p>{endpoint.description}</p>
+                <p>
+                  🔗 Source : {" "}
+                  <a href={endpoint.source} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    {endpoint.source}
+                  </a>
+                </p>
+              </div>
             </CardContent>
           </Card>
         </PlantIdDialog>

@@ -52,7 +52,7 @@ export const navItems: NavItem[] = [
   // },
   {
     title: 'Prediction',
-    url: '/dashboard/kanban',
+    url: '/dashboard/prediction',
     icon: 'kanban',
     shortcut: ['k', 'k'],
     isActive: false,

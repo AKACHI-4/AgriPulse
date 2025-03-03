@@ -76,10 +76,10 @@ export function PieGraph() {
                         textAnchor='middle'
                         dominantBaseline='middle'
                       >
-                        <tspan x={viewBox.cx} y={viewBox.cy} className='fill-foreground text-2xl font-bold'>
+                        <tspan x={viewBox.cx} y={viewBox.cy} className='fill-foreground text-3xl font-bold'>
                           {totalArea.toLocaleString()} ha
                         </tspan>
-                        <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className='fill-muted-foreground'>
+                        <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className='fill-muted-foreground text-base'>
                           Total Area
                         </tspan>
                       </text>
