@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import LocationForm from "@/components/location-dialog";
@@ -9,7 +9,12 @@ import { Loader2 } from "lucide-react";
 
 export default function ClientSetupHandler({ children }: { children: React.ReactNode }) {
   const user = useQuery(api.users.getCurrentUser) ?? null;
-  const crops = useQuery(api.crops.getCropsByUser, user ? { user_id: user._id } : "skip") ?? [];
+  const rawCrops = useQuery(
+    api.crops.getCropsByUser,
+    user ? { user_id: user._id } : "skip"
+  ) ?? [];
+
+  const crops = useMemo(() => rawCrops ?? [], [rawCrops])
 
   const [setupStep, setSetupStep] = useState<"loading" | "location" | "crops" | "done">("loading");
 

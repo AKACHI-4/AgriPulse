@@ -7,6 +7,7 @@ import { Trash2 } from "lucide-react";
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
+import * as Sentry from "@sentry/nextjs";
 
 export default function CropForm({ open, onFinish }: { open: boolean; onFinish: () => void }) {
   const user = useQuery(api.users.getCurrentUser);
@@ -31,7 +32,8 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
 
   const saveCrops = async () => {
     if (!userId) {
-      console.error("Convex User ID is missing");
+      Sentry.captureException("Convex User ID is missing");
+      // console.error("Convex User ID is missing");
       return;
     }
     await Promise.all(crops.map((crop) => createCrop({ user_id: userId, ...crop })));

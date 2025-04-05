@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { convertToBase64 } from "@/lib/utils";
 import { ModelEndpointsInterface } from "$/types";
@@ -12,7 +10,9 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import { Dialog } from "@/components/ui/dialog";
 import { SingleImageDropzone } from "$/src/components/single-image-dropzone";
-import data from "$/data/response.json";
+import * as Sentry from "@sentry/nextjs";
+import Image from "next/image";
+// import data from "$/data/response.json";
 
 export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsInterface) {
   const [image, setImage] = useState<File>();
@@ -110,7 +110,8 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
       await saveIdentification(identificationData);
 
     } catch (error) {
-      console.error("Error identifying plant:", error);
+      // console.error("Error identifying plant:", error);
+      Sentry.captureException(`error identifying plant : ${error}`);
     } finally {
       setLoading(false);
     }
@@ -205,7 +206,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
 
               {/* Center Panel: Main Image */}
               <div className="col-span-5">
-                <img
+                <Image
                   src={result.result.classification.suggestions[0]?.details?.image?.value || ""}
                   alt="Plant"
                   className="overflow-hidden rounded-lg w-full max-h-72 object-cover shadow-lg"
@@ -217,7 +218,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
                 {result.result.classification.suggestions[0]?.similar_images.map(
                   (img: any, index: number) => (
                     <div key={index} className="overflow-hidden rounded-lg object-cover shadow-lg">
-                      <img
+                      <Image
                         src={img.url}
                         alt={`Similar Plant ${index}`}
                         className="w-full max-h-32 object-cover transform hover:scale-105 transition duration-200"

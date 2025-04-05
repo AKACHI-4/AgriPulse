@@ -9,10 +9,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import {
@@ -28,19 +25,14 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail,
-  useSidebar
+  SidebarRail
 } from '@/components/ui/sidebar';
 import { navItems } from '@/constants/data';
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronRight,
   ChevronsUpDown,
-  CreditCard,
   Sprout,
-  LogOut
 } from 'lucide-react';
 import { useUser, SignOutButton } from '@clerk/clerk-react';
 import Link from 'next/link';
@@ -58,7 +50,7 @@ export const company = {
 export default function AppSidebar() {
   const { user } = useUser();
   const pathname = usePathname();
-  const { state, isMobile } = useSidebar();
+  // const { state, isMobile } = useSidebar();
 
   return (
     <Sidebar collapsible='icon'>

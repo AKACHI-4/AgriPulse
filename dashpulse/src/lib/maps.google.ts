@@ -1,6 +1,7 @@
 "use server";
 
 import { Client } from "@googlemaps/google-maps-services-js";
+import * as Sentry from "@sentry/nextjs";
 
 const client = new Client();
 
@@ -17,7 +18,8 @@ export const autocomplete = async (input: string) => {
 
     return response.data.predictions;
   } catch (error) {
-    console.error("Error fetching autocomplete results:", error);
+    // console.error("Error fetching autocomplete results:", error);
+    Sentry.captureException(`error fetching autocomplete results : ${error}`);
     return [];
   }
 };
@@ -38,7 +40,8 @@ export const getPlaceDetails = async (placeId: string) => {
 
     return location ? { lat: location.lat, lng: location.lng } : null;
   } catch (error) {
-    console.error("Error fetching place details:", error);
+    // console.error("Error fetching place details:", error);
+    Sentry.captureException(`error fetching place details : ${error}`);
     return null;
   }
 };

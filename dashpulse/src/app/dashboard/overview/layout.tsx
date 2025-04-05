@@ -6,6 +6,7 @@ import PageContainer from '@/components/layout/page-container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from "convex/react";
 import React from 'react';
+import * as Sentry from "@sentry/nextjs";
 
 type WeatherDataInterface = {
   temp: number;
@@ -49,12 +50,13 @@ export default function OverViewLayout({
         const data = await response.json();
         setWeatherData(data);
       } catch (error) {
-        console.error('Error fetching forecast:', error);
+        // console.error('Error fetching forecast:', error);
+        Sentry.captureException(error); // Send error details
       }
     }
 
     fetchWeatherData();
-  }, []);
+  }, [user]);
 
   return (
     <PageContainer>

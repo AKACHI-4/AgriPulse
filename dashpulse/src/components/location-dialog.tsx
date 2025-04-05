@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { autocomplete, getPlaceDetails } from "@/lib/maps.google";
 import { PlaceAutocompleteResult } from "@googlemaps/google-maps-services-js";
-import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { api } from "$/convex/_generated/api";
+import * as Sentry from "@sentry/nextjs";
 
 export default function LocationForm({ open, onNext }: { open: boolean; onNext: () => void }) {
   // console.log("LocationForm Rendering !!");
@@ -34,7 +34,7 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
     };
 
     fetchPredictions();
-  }, [input]);
+  }, [input, selected]);
 
   const handleSelectLocation = async (place: PlaceAutocompleteResult) => {
     const details = await getPlaceDetails(place.place_id);
@@ -60,7 +60,8 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
       });
       onNext();
     } catch (error) {
-      console.error("Error saving location:", error);
+      // console.error("Error saving location:", error);
+      Sentry.captureException(`error saving location : ${error}`);
     }
   };
 

@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
+import * as Sentry from "@sentry/nextjs";
 
 export const description = 'An interactive bar chart';
 
@@ -66,7 +67,8 @@ export function BarGraph() {
           }))
         );
       } catch (error) {
-        console.error('Error fetching forecast:', error);
+        // console.error('Error fetching forecast:', error);
+        Sentry.captureException(`error fetching forecast : ${error}`);
       } finally {
         setIsLoading(false);
       }

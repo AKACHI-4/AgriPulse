@@ -11,7 +11,6 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
@@ -39,11 +38,13 @@ export function PieGraph() {
     user_id: user?._id as Id<"users">
   });
 
-  const chartData = crops?.map((crop, index) => ({
-    crop: crop.name,
-    area: crop.area,
-    color: colorPalette[index % colorPalette.length]
-  })) ?? [];
+  const chartData = React.useMemo(() => {
+    return crops?.map((crop, index) => ({
+      crop: crop.name,
+      area: crop.area,
+      color: colorPalette[index % colorPalette.length]
+    })) ?? [];
+  }, [crops]);
 
   const totalArea = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.area, 0);

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader2 } from 'lucide-react';
 import { ModelEndpointsInterface } from '$/types';
+import * as Sentry from "@sentry/nextjs";
 
 interface ResultType {
   predicted_class_name?: string;
@@ -49,7 +50,8 @@ export default function DiseaseDetection({ endpoint }: ModelEndpointsInterface) 
       setResult(data);
       setShowResultDialog(true);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
+      Sentry.captureException(error);
       setResult({ error: (error as Error).message });
     } finally {
       setLoading(false);
