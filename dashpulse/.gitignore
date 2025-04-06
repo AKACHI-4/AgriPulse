@@ -1,4 +1,5 @@
 .env.local
+.env.prod
 
 data
 # Sentry Config File
