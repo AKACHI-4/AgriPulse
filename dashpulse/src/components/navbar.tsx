@@ -36,9 +36,6 @@ export const Navbar = () => {
                 Log in
               </Button>
             </SignInButton>
-            <SignInButton mode='modal'>
-              <Button size='sm'>Get Potion Free</Button>
-            </SignInButton>
           </>
         )}
         {isAuthenticated && !isLoading && (
