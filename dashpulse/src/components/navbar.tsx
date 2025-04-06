@@ -10,6 +10,7 @@ import { SignInButton, UserButton } from '@clerk/clerk-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/spinner';
 import { useConvexAuth } from 'convex/react';
+import Link from 'next/link';
 
 export const Navbar = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -23,7 +24,7 @@ export const Navbar = () => {
       )}
     >
       <Logo />
-      <div className='flex w-full items-center justify-between gap-x-3 md:ml-auto md:justify-end'>
+      <div className='flex w-full items-center justify-between gap-x-2 md:ml-auto md:justify-end'>
         {isLoading && (
           <p>
             <Spinner />
@@ -32,7 +33,7 @@ export const Navbar = () => {
         {!isAuthenticated && !isLoading && (
           <>
             <SignInButton mode='modal'>
-              <Button variant='ghost' size='sm'>
+              <Button className='px-3 py-3 text-base' variant='ghost' size='sm'>
                 Log in
               </Button>
             </SignInButton>
@@ -40,13 +41,9 @@ export const Navbar = () => {
         )}
         {isAuthenticated && !isLoading && (
           <>
-            {/* <Button variant='ghost' size='sm' asChild>
-              <Link href='/dashboard'>Enter Potion</Link>
-            </Button> */}
             <UserButton afterSignOutUrl='/' />
           </>
         )}
-
         <ModeToggle />
       </div>
     </div>

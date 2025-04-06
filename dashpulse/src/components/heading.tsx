@@ -25,7 +25,7 @@ export const Heading = () => {
         </div>
       )}
       {isAuthenticated && !isLoading && (
-        <Button className="text-base px-5 py-4" asChild>
+        <Button className="text-base px-5 py-5" asChild>
           <Link href='/dashboard/overview'>
             Enter Dashboard
             <ArrowRight className='ml-2 h-4 w-4' />
@@ -34,8 +34,8 @@ export const Heading = () => {
       )}
       {!isAuthenticated && !isLoading && (
         <SignInButton mode='modal'>
-          <Button className="text-base px-5 py-4">
-            Dashboard
+          <Button className="text-base px-5 py-5">
+            Get Dashboard free
             <ArrowRight className='ml-2 h-4 w-4' />
           </Button>
         </SignInButton>
