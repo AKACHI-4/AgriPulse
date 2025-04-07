@@ -2,7 +2,7 @@ import { Endpoints } from "$/types";
 
 export const modelEndpoints: Endpoints[] = [
   {
-    title: 'Create identification',
+    title: 'Create Identification',
     url: 'identification',
     method: 'POST',
     description: 'Submit images to identify plant species and receive possible matches with detailed information.',
@@ -11,8 +11,8 @@ export const modelEndpoints: Endpoints[] = [
     source: 'plant.id',
   },
   {
-    title: 'Health assessment',
-    url: 'health-assessment',
+    title: 'Health Assessment',
+    url: 'health_assessment',
     method: 'POST',
     description: 'Upload images to assess plant health, detect diseases, pests, or other issues affecting the plant.',
     // icon: 'health',
