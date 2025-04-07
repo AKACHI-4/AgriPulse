@@ -7,6 +7,7 @@ import { Endpoints, ModelEndpointsInterface } from "$/types";
 
 const dialogComponents: Record<string, React.ComponentType<{ endpoint: Endpoints }>> = {
   "Create identification": dynamic(() => import("./dialogs/create-identification")),
+  "Health assessment": dynamic(() => import("./dialogs/get-identification")),
   "Disease Detection": dynamic(() => import("./dialogs/disease-detection")),
 };
 

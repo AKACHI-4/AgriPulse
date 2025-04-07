@@ -125,6 +125,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
             Plant Identification
           </DialogTitle>
         </DialogHeader>
+
         <div className="my-2">
           <SingleImageDropzone
             value={image}
@@ -133,6 +134,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
             dropzoneOptions={{ maxSize: 5 * 1024 * 1024 }}
           />
         </div>
+        
         <div className="flex justify-center">
           <Button
             onClick={handleAnalyze}
@@ -206,7 +208,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
 
               {/* Center Panel: Main Image */}
               <div className="col-span-5">
-                <Image
+                <img
                   src={result.result.classification.suggestions[0]?.details?.image?.value || ""}
                   alt="Plant"
                   className="overflow-hidden rounded-lg w-full max-h-72 object-cover shadow-lg"
@@ -218,7 +220,7 @@ export default function PlantIdentificationDialog({ endpoint }: ModelEndpointsIn
                 {result.result.classification.suggestions[0]?.similar_images.map(
                   (img: any, index: number) => (
                     <div key={index} className="overflow-hidden rounded-lg object-cover shadow-lg">
-                      <Image
+                      <img
                         src={img.url}
                         alt={`Similar Plant ${index}`}
                         className="w-full max-h-32 object-cover transform hover:scale-105 transition duration-200"
