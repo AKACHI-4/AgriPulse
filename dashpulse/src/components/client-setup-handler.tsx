@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import LocationForm from "@/components/location-dialog";
@@ -8,46 +8,45 @@ import CropForm from "@/components/crop-dialog";
 import { Loader2 } from "lucide-react";
 
 export default function ClientSetupHandler({ children }: { children: React.ReactNode }) {
+  const [isProcessing, setIsProcessing] = useState(false);
   const user = useQuery(api.users.getCurrentUser);
-  const rawCrops = useQuery(
+  const crops = useQuery(
     api.crops.getCropsByUser,
-    user ? { user_id: user._id } : "skip"
+    user?._id ? { user_id: user._id } : "skip"
   );
 
-  const crops = useMemo(() => rawCrops ?? [], [rawCrops]);
-
-  const [setupStep, setSetupStep] = useState<"loading" | "location" | "crops" | "done">("loading");
-
+  // Handle processing completion
   useEffect(() => {
-    // Check if queries are still loading
-    if (user === undefined || rawCrops === undefined) return;
-
-    if (!user) {
-      setSetupStep("location");
-    } else if (rawCrops.length === 0) {
-      setSetupStep("crops");
-    } else {
-      setSetupStep("done");
+    if (isProcessing) {
+      const timeout = setTimeout(() => setIsProcessing(false), 3000);
+      return () => clearTimeout(timeout);
     }
-  }, [user, rawCrops]);
+  }, [isProcessing]);
 
-  if (user === undefined || rawCrops === undefined || setupStep === "loading") {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="animate-spin text-gray-500" size={32} />
-      </div>
-    );
+  // Show loading states
+  if (user === undefined || crops === undefined) {
+    return <Loader />;
   }
 
+  if (isProcessing) {
+    return <Loader />;
+  }
+
+  if (!user) {
+    return <LocationForm open onNext={() => setIsProcessing(true)} />;
+  }
+
+  if (crops.length === 0) {
+    return <CropForm open onFinish={() => setIsProcessing(true)} />;
+  }
+
+  return children;
+}
+
+function Loader() {
   return (
-    <>
-      {setupStep === "location" && (
-        <LocationForm open={setupStep === "location"} onNext={() => setSetupStep("crops")} />
-      )}
-      {setupStep === "crops" && (
-        <CropForm open={setupStep === "crops"} onFinish={() => setSetupStep("done")} />
-      )}
-      {setupStep === "done" && children}
-    </>
+    <div className="flex justify-center items-center h-screen">
+      <Loader2 className="animate-spin text-gray-500" size={32} />
+    </div>
   );
 }
