@@ -24,7 +24,6 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
   useEffect(() => {
     if (input.length < 3 || selected) {
       setPredictions([]);
-      setSelected(false);
       return;
     }
 
@@ -76,7 +75,10 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
           <Input
             placeholder="Search location..."
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              setSelected(false);
+            }}
             className="border border-gray-300 focus:border-primary rounded-md"
           />
 

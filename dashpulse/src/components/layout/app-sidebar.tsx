@@ -56,9 +56,11 @@ export default function AppSidebar() {
     <Sidebar collapsible='icon'>
       <SidebarHeader>
         <div className='flex gap-2 py-2 text-sidebar-accent-foreground'>
-          <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-            <company.logo className='size-6' />
-          </div>
+          <Link href="/" passHref>
+            <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground cursor-pointer'>
+              <company.logo className='size-6' />
+            </div>
+          </Link>
           <div className='grid flex-1 text-left text-sm leading-tight'>
             <span className='truncate font-semibold'>{company.name}</span>
             <span className='truncate text-xs'>{company.plan}</span>
@@ -155,51 +157,6 @@ export default function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size='lg'
-                  className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
-                >
-                  <Avatar className='h-8 w-8 rounded-lg'>
-                    <AvatarImage
-                      src={user?.imageUrl || ''}
-                      alt={user?.fullName || ''}
-                    />
-                    <AvatarFallback className='rounded-lg'>
-                      {user?.firstName?.charAt(0).toUpperCase() || 'CN'}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className='grid flex-1 text-left text-sm leading-tight'>
-                    <span className='truncate font-semibold'>
-                      {user?.fullName || ''}
-                    </span>
-                    <span className='truncate text-xs'>
-                      {user?.emailAddresses[0]?.emailAddress || ''}
-                    </span>
-                  </div>
-                  <ChevronsUpDown className='ml-auto size-4' />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className='w-[--radix-dropdown-menu-trigger-width] min-w-56'
-                side='bottom'
-                align='end'
-                sideOffset={4}
-              >
-                <DropdownMenuItem>
-                  <SignOutButton>
-                    Log out
-                  </SignOutButton>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

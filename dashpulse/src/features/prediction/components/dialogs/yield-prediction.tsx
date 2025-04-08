@@ -110,7 +110,7 @@ export default function YieldPredictor({ endpoint }: ModelEndpointsInterface) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="my-4">
+        <div className="my-2">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="rainfall" className="text-base">Annual Rainfall (mm)</Label>

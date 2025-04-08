@@ -3,10 +3,9 @@
 import { useState, ChangeEvent } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from "@/components/ui/label";
 import { Loader2 } from 'lucide-react';
 import { ModelEndpointsInterface } from '$/types';
+import { SingleImageDropzone } from '$/src/components/single-image-dropzone';
 import * as Sentry from "@sentry/nextjs";
 
 interface ResultType {
@@ -16,15 +15,13 @@ interface ResultType {
 }
 
 export default function PestDetection({ endpoint }: ModelEndpointsInterface) {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<ResultType | null>(null);
   const [showResultDialog, setShowResultDialog] = useState<boolean>(false);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setFile(event.target.files[0]);
-    }
+  const handleFileChange = (file?: File) => {
+    if (!loading) setFile(file || undefined);
   };
 
   const handleUpload = async () => {
@@ -48,7 +45,7 @@ export default function PestDetection({ endpoint }: ModelEndpointsInterface) {
       if (!response.ok) throw new Error('Failed to fetch prediction');
 
       const data: ResultType = await response.json();
-      setFile(null);
+      setFile(undefined);
       setResult(data);
       setShowResultDialog(true);
     } catch (error) {
@@ -67,11 +64,13 @@ export default function PestDetection({ endpoint }: ModelEndpointsInterface) {
           <DialogTitle className="text-center text-2xl font-bold">Disease Detection</DialogTitle>
         </DialogHeader>
 
-        <div className="my-4">
-          <Label htmlFor="file" className="text-base">
-            Upload Image
-          </Label>
-          <Input type="file" onChange={handleFileChange} />
+        <div className="my-2">
+          <SingleImageDropzone
+            value={file}
+            onChange={handleFileChange}
+            disabled={loading}
+            dropzoneOptions={{ maxSize: 5 * 1024 * 1024 }}
+          />
         </div>
 
         <div className="flex justify-center">
