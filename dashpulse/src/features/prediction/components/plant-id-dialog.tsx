@@ -9,6 +9,8 @@ const dialogComponents: Record<string, React.ComponentType<{ endpoint: Endpoints
   "Create Identification": dynamic(() => import("./dialogs/create-identification")),
   "Health Assessment": dynamic(() => import("./dialogs/get-identification")),
   "Disease Detection": dynamic(() => import("./dialogs/disease-detection")),
+  "Pest Detection": dynamic(() => import("./dialogs/pest-detection")),
+  "Yield Prediction": dynamic(() => import("./dialogs/yield-prediction")),
 };
 
 export default function PlantIdDialog({ endpoint, children }: ModelEndpointsInterface) {

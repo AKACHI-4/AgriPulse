@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-const BASE_URL = "https://one00xfarmer-model-api.onrender.com";
+const BASE_URL = "https://adarsh-a1-100xfarmer-model-backend.hf.space";
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,6 +11,8 @@ export async function POST(req: NextRequest) {
     }
 
     const formData = await req.formData();
+    // console.log(formData);
+
     const response = await axios.post(
       `${BASE_URL}${endpoint}`,
       formData,
@@ -20,6 +22,7 @@ export async function POST(req: NextRequest) {
         },
       }
     );
+    // console.log(response);
 
     return NextResponse.json(response.data);
   } catch (error: any) {

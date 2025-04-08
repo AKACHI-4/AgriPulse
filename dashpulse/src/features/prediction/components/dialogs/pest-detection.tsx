@@ -3,8 +3,8 @@
 import { useState, ChangeEvent } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Label } from "@/components/ui/label";
 import { Input } from '@/components/ui/input';
+import { Label } from "@/components/ui/label";
 import { Loader2 } from 'lucide-react';
 import { ModelEndpointsInterface } from '$/types';
 import * as Sentry from "@sentry/nextjs";
@@ -15,7 +15,7 @@ interface ResultType {
   error?: string;
 }
 
-export default function DiseaseDetection({ endpoint }: ModelEndpointsInterface) {
+export default function PestDetection({ endpoint }: ModelEndpointsInterface) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<ResultType | null>(null);
@@ -71,7 +71,7 @@ export default function DiseaseDetection({ endpoint }: ModelEndpointsInterface) 
           <Label htmlFor="file" className="text-base">
             Upload Image
           </Label>
-          <Input className="text-base" type="file" onChange={handleFileChange} />
+          <Input type="file" onChange={handleFileChange} />
         </div>
 
         <div className="flex justify-center">
