@@ -35,7 +35,7 @@ export default function PestDetection({ endpoint }: ModelEndpointsInterface) {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('model_name', 'disease');
+      formData.append('model_name', 'pest');
 
       const response = await fetch(`/api/canopy?endpoint=${endpoint.url}`, {
         method: endpoint.method,
