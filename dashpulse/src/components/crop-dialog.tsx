@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
@@ -8,36 +8,93 @@ import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import * as Sentry from "@sentry/nextjs";
+import { Crop } from "$/types";
+import { Id } from "$/convex/_generated/dataModel";
 
-export default function CropForm({ open, onFinish }: { open: boolean; onFinish: () => void }) {
+export default function CropForm({
+  open,
+  onFinish,
+  loading,
+  setLoading,
+}: {
+  open: boolean;
+  onFinish: () => void;
+  loading: boolean;
+  setLoading: (value: boolean) => void;
+}) {
   const user = useQuery(api.users.getCurrentUser);
   const userId = user?._id;
 
-  const createCrop = useMutation(api.crops.createCrop);
+  const [crops, setCrops] = useState<Crop[]>([{ name: "", area: 0, revenue: 0, production: 0 }]);
 
-  const [crops, setCrops] = useState([{ name: "", area: 0, revenue: 0, production: 0 }]);
+  const upsertCrop = useMutation(api.crops.upsertCrop);
+  const existingCrops = useQuery(api.crops.getCropsByUser, userId ? { user_id: userId } : "skip");
+  const deleteCrop = useMutation(api.crops.deleteCrop);
+
+  const [removedCropIds, setRemovedCropIds] = useState<Id<"crops">[]>([]);
+
+  useEffect(() => {
+    if (existingCrops && existingCrops.length > 0) {
+      setCrops(existingCrops);
+    }
+  }, [existingCrops]);
 
   const handleCropChange = (index: number, field: string, value: string) => {
+    if (loading) return; // disable editing while loading
     const newCrops = [...crops];
-    newCrops[index] = { ...newCrops[index], [field]: field === "name" ? value : Number(value) };
+    newCrops[index] = {
+      ...newCrops[index],
+      [field]: field === "name" ? value : Number(value),
+    };
     setCrops(newCrops);
   };
 
   const addCrop = () => {
+    if (loading) return; // disable adding while loading
     if (crops.length < 10) {
       setCrops([...crops, { name: "", area: 0, revenue: 0, production: 0 }]);
     }
   };
-  const removeCrop = (index: number) => setCrops(crops.filter((_, i) => i !== index));
+
+  const removeCrop = (index: number) => {
+    if (loading) return; // disable removing while loading
+    const cropToRemove = crops[index];
+    if (cropToRemove._id) {
+      setRemovedCropIds((prev) => [...prev, cropToRemove._id as Id<"crops">]);
+    }
+    setCrops(crops.filter((_, i) => i !== index));
+  };
 
   const saveCrops = async () => {
     if (!userId) {
       Sentry.captureException("Convex User ID is missing");
-      // console.error("Convex User ID is missing");
       return;
     }
-    await Promise.all(crops.map((crop) => createCrop({ user_id: userId, ...crop })));
-    onFinish();
+
+    setLoading(true);
+    try {
+      await Promise.all(
+        crops.map((crop) =>
+          upsertCrop({
+            id: crop._id, // undefined for new crops
+            user_id: userId,
+            name: crop.name,
+            area: crop.area,
+            revenue: crop.revenue,
+            production: crop.production,
+          })
+        )
+      );
+
+      await Promise.all(removedCropIds.map((id) => deleteCrop({ id })));
+
+      setRemovedCropIds([]);
+      onFinish();
+    } catch (error) {
+      Sentry.captureException(`Error saving crops: ${error}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,6 +112,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                 value={crop.name}
                 onChange={(e) => handleCropChange(index, "name", e.target.value)}
                 className="p-3 border border-gray-300 rounded-md"
+                disabled={loading}
               />
               <Input
                 placeholder="Field Area (ha)"
@@ -62,6 +120,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                 value={crop.area || ""}
                 onChange={(e) => handleCropChange(index, "area", e.target.value)}
                 className="p-3 border border-gray-300 rounded-md"
+                disabled={loading}
               />
               <Input
                 placeholder="Revenue (₹)"
@@ -69,6 +128,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                 value={crop.revenue || ""}
                 onChange={(e) => handleCropChange(index, "revenue", e.target.value)}
                 className="p-3 border border-gray-300 rounded-md"
+                disabled={loading}
               />
               <Input
                 placeholder="Production (kg)"
@@ -76,6 +136,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                 value={crop.production || ""}
                 onChange={(e) => handleCropChange(index, "production", e.target.value)}
                 className="p-3 border border-gray-300 rounded-md"
+                disabled={loading}
               />
 
               {crops.length > 1 && (
@@ -84,6 +145,7 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
                   size="icon"
                   onClick={() => removeCrop(index)}
                   className="self-end px-2"
+                  disabled={loading}
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>
@@ -92,12 +154,20 @@ export default function CropForm({ open, onFinish }: { open: boolean; onFinish: 
           ))}
 
           <div className="flex justify-center gap-3 mt-6">
-            <Button onClick={addCrop} className="px-5 py-3 text-base font-semibold bg-primary text-white rounded-md">
+            <Button
+              onClick={addCrop}
+              className="px-5 py-3 text-base font-semibold bg-primary text-white rounded-md"
+              disabled={loading}
+            >
               Add Crop
             </Button>
             <DialogClose asChild>
-              <Button onClick={saveCrops} className="px-5 py-3 text-base font-semibold bg-primary text-white rounded-md">
-                Save
+              <Button
+                onClick={saveCrops}
+                className="px-5 py-3 text-base font-semibold bg-primary text-white rounded-md"
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save"}
               </Button>
             </DialogClose>
           </div>

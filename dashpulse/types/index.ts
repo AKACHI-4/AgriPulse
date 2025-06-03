@@ -1,5 +1,14 @@
+import { Id } from '$/convex/_generated/dataModel';
 import { Icons } from '@/components/icons';
 import { ReactNode } from 'react';
+
+export type Crop = {
+  _id?: Id<"crops">; // optional because new crops won't have it
+  name: string;
+  area: number;
+  revenue: number;
+  production: number;
+};
 
 export interface NavItem {
   title: string;

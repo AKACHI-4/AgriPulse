@@ -11,10 +11,18 @@ import { useMutation } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import * as Sentry from "@sentry/nextjs";
 
-export default function LocationForm({ open, onNext }: { open: boolean; onNext: () => void }) {
-  // console.log("LocationForm Rendering !!");
-
-  const createUser = useMutation(api.users.createUser);
+export default function LocationForm({
+  open,
+  onNext,
+  loading,
+  setLoading,
+}: {
+  open: boolean;
+  onNext: () => void;
+  loading: boolean;
+  setLoading: (value: boolean) => void;
+}) {
+  const upsertUser = useMutation(api.users.upsertUserLocation);
 
   const [location, setLocation] = useState({ address: "", latitude: 0.0, longitude: 0.0 });
   const [predictions, setPredictions] = useState<PlaceAutocompleteResult[]>([]);
@@ -46,21 +54,23 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
 
       setInput(place.description);
       setPredictions([]);
-      setSelected(true); // Mark as selected
+      setSelected(true);
     }
   };
 
   const handleSaveAndNext = async () => {
     try {
-      await createUser({
+      setLoading(true);
+      await upsertUser({
         address: location.address,
         latitude: location.latitude,
         longitude: location.longitude,
       });
       onNext();
     } catch (error) {
-      // console.error("Error saving location:", error);
       Sentry.captureException(`error saving location : ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,6 +90,7 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
               setSelected(false);
             }}
             className="border border-gray-300 focus:border-primary rounded-md"
+            disabled={loading}
           />
 
           {predictions.length > 0 && (
@@ -111,15 +122,17 @@ export default function LocationForm({ open, onNext }: { open: boolean; onNext: 
             }
             readOnly
             className="border border-gray-300 rounded-md my-2 bg-gray-100"
+            disabled={loading}
           />
 
           <div className="flex justify-center">
             <DialogClose asChild>
               <Button
                 onClick={handleSaveAndNext}
+                disabled={loading}
                 className="px-5 py-3 text-base font-semibold bg-primary text-white rounded-md hover:bg-primary/90"
               >
-                Save
+                {loading ? "Saving..." : "Save"}
               </Button>
             </DialogClose>
           </div>

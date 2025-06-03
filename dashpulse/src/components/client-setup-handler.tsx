@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "$/convex/_generated/api";
 import LocationForm from "@/components/location-dialog";
@@ -8,26 +8,38 @@ import CropForm from "@/components/crop-dialog";
 import { Loader2 } from "lucide-react";
 
 export default function ClientSetupHandler({ children }: { children: React.ReactNode }) {
+  const [loading, setLoading] = useState(false);
+
   const user = useQuery(api.users.getCurrentUser);
   const crops = useQuery(
     api.crops.getCropsByUser,
     user?._id ? { user_id: user._id } : "skip"
   );
 
-  if (user === undefined) {
+  if (user === undefined || (user && crops === undefined)) {
     return <Loader />;
   }
 
   if (!user) {
-    return <LocationForm open onNext={() => { }} />;
+    return (
+      <LocationForm
+        open
+        loading={loading}
+        setLoading={setLoading}
+        onNext={() => { }}
+      />
+    );
   }
 
-  if (crops === undefined) {
-    return <Loader />;
-  }
-
-  if (crops.length === 0) {
-    return <CropForm open onFinish={() => { }} />;
+  if (crops!.length === 0) {
+    return (
+      <CropForm
+        open
+        loading={loading}
+        setLoading={setLoading}
+        onFinish={() => { }}
+      />
+    );
   }
 
   return children;

@@ -1,8 +1,9 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
-export const createCrop = mutation({
+export const upsertCrop = mutation({
   args: {
+    id: v.optional(v.id("crops")),
     user_id: v.id("users"),
     name: v.string(),
     area: v.number(),
@@ -10,11 +11,21 @@ export const createCrop = mutation({
     production: v.number(),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.insert("crops", {
-      ...args,
-      created_at: Date.now(),
-      updated_at: Date.now(),
-    });
+    const now = Date.now();
+    const base = {
+      user_id: args.user_id,
+      name: args.name,
+      area: args.area,
+      revenue: args.revenue,
+      production: args.production,
+      updated_at: now,
+    };
+
+    if (args.id) {
+      return await ctx.db.patch(args.id, base);
+    } else {
+      return await ctx.db.insert("crops", { ...base, created_at: now });
+    }
   },
 });
 
@@ -30,14 +41,14 @@ export const createCrop = mutation({
 //   },
 // });
 
-// export const deleteCrop = mutation({
-//   args: {
-//     id: v.id("crops")
-//   },
-//   handler: async (ctx, args) => {
-//     return await ctx.db.delete(args.id);
-//   },
-// });
+export const deleteCrop = mutation({
+  args: {
+    id: v.id("crops")
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.delete(args.id);
+  },
+});
 
 export const getCropYieldAndFieldRevenue = query({
   args: {
