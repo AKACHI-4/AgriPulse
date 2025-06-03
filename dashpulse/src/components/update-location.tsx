@@ -20,9 +20,10 @@ export function UpdateLocation() {
 
       <LocationForm
         open={open}
-        onNext={() => setOpen(false)}
+        onFinish={() => setOpen(false)}
         loading={loading}
         setLoading={setLoading}
+        enableClose={true}
       />
     </>
   );

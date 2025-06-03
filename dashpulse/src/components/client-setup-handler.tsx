@@ -26,7 +26,8 @@ export default function ClientSetupHandler({ children }: { children: React.React
         open
         loading={loading}
         setLoading={setLoading}
-        onNext={() => { }}
+        onFinish={() => { }}
+        enableClose={false}
       />
     );
   }
@@ -38,6 +39,7 @@ export default function ClientSetupHandler({ children }: { children: React.React
         loading={loading}
         setLoading={setLoading}
         onFinish={() => { }}
+        enableClose={false}
       />
     );
   }

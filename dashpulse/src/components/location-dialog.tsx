@@ -13,14 +13,16 @@ import * as Sentry from "@sentry/nextjs";
 
 export default function LocationForm({
   open,
-  onNext,
+  onFinish,
   loading,
   setLoading,
+  enableClose,
 }: {
   open: boolean;
-  onNext: () => void;
+  onFinish: () => void;
   loading: boolean;
   setLoading: (value: boolean) => void;
+  enableClose: boolean;
 }) {
   const upsertUser = useMutation(api.users.upsertUserLocation);
 
@@ -66,7 +68,7 @@ export default function LocationForm({
         latitude: location.latitude,
         longitude: location.longitude,
       });
-      onNext();
+      onFinish();
     } catch (error) {
       Sentry.captureException(`error saving location : ${error}`);
     } finally {
@@ -75,7 +77,9 @@ export default function LocationForm({
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={(val) => {
+      if (enableClose) onFinish();
+    }}>
       <DialogContent className="max-w-md p-6 rounded-lg shadow-lg">
         <DialogHeader className="flex flex-col items-center">
           <DialogTitle className="text-xl font-semibold">Set Your Location</DialogTitle>

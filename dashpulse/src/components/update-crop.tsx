@@ -23,6 +23,7 @@ export function UpdateCrop() {
         onFinish={() => setOpen(false)}
         loading={loading}
         setLoading={setLoading}
+        enableClose={true}
       />
     </>
   );

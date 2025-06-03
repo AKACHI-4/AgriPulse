@@ -10,17 +10,20 @@ import { api } from "$/convex/_generated/api";
 import * as Sentry from "@sentry/nextjs";
 import { Crop } from "$/types";
 import { Id } from "$/convex/_generated/dataModel";
+import { X } from "lucide-react";
 
 export default function CropForm({
   open,
   onFinish,
   loading,
   setLoading,
+  enableClose,
 }: {
   open: boolean;
   onFinish: () => void;
   loading: boolean;
   setLoading: (value: boolean) => void;
+  enableClose: boolean;
 }) {
   const user = useQuery(api.users.getCurrentUser);
   const userId = user?._id;
@@ -98,10 +101,14 @@ export default function CropForm({
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={(val) => {
+      if (enableClose) onFinish(); // Only allow closing if enabled
+    }}>
       <DialogContent className="max-w-2xl p-6 rounded-lg shadow-lg">
         <DialogHeader className="flex flex-col items-center">
-          <DialogTitle className="text-xl font-semibold">Add Your Crops</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">
+            Add Your Crops
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
